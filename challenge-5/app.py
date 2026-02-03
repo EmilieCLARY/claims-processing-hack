@@ -42,7 +42,7 @@ def get_api_url():
 
 def check_health(api_url: str) -> dict:
     try:
-        with httpx.Client(timeout=10.0) as client:
+        with httpx.Client(timeout=60.0) as client:
             response = client.get(f"{api_url}/health")
             return response.json()
     except Exception as e:
@@ -51,7 +51,7 @@ def check_health(api_url: str) -> dict:
 
 def process_claim(api_url: str, file_content: bytes, filename: str) -> dict:
     try:
-        with httpx.Client(timeout=120.0) as client:
+        with httpx.Client(timeout=1440.0) as client:
             files = {"file": (filename, file_content, "image/jpeg")}
             response = client.post(f"{api_url}/process-claim/upload", files=files)
             return response.json()
